@@ -30,7 +30,12 @@ try:
                             help="Delete a tag from a file or folder",
                             type=str,
                             required=False)
-        parser.add_argument("filename",
+        parser.add_argument("-u",
+                            dest="del_all",
+                            help="Delete all tags from a file or folder",
+                            action='store_true',
+                            required=False)
+        parser.add_argument("filename", nargs='?', default=os.getcwd(),
                             help="Operate on the given file or folder")
         args = parser.parse_args()
 
@@ -55,6 +60,9 @@ try:
                 if not len(tag_list):
                     tagalong_db.remove(query.folder == args.filename)
                 tagalong_db.update({"tags" : tag_list}, query.folder == args.filename)
+        elif args.del_all:
+            if folder:
+                tagalong_db.remove(query.folder == args.filename)
         else:
             while(args.filename is not "/"):
                 folder = tagalong_db.get(query.folder == args.filename)
