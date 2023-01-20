@@ -45,14 +45,15 @@ current working directory:
 
 ```
 alias tag='() { <path-to-tagalong-clone>/tagalong.py -a ${1} `pwd` ;}'
-alias untag='() { <path-to-tagalong-clone>/tagalong.py -d ${1} `pwd` ;}'
+alias untag='() { if [[ ! -z ${1} ]] then <path-to-tagalong-clone>/tagalong.py -d ${1}; else <path-to-tagalong-clone>/tagalong.py -u; fi ;}'
 ```
 
 With a simple
 ```
 tag my_fancy_tag
 ```
-the current folder can be tagged with the tag `my_fancy_tag`.
+the current folder can be tagged with the tag `my_fancy_tag`. If no argument is
+given to the untag command, all tags will be removed from the current folder.
 
 The tags of a given folder can be shown with `./tagalong.py <folder-name>`. But
 to make the whole thing useful, it needs to be added to your zsh prompt, to
